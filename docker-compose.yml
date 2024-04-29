@@ -1,0 +1,15 @@
+services:
+  java_db:
+    container_name: java_db
+    image: postgres:13
+    ports:
+      - 5436:5435
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}

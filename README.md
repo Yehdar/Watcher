@@ -1,9 +1,13 @@
 # Watcher
 
 ## Abstract
+
 Staff management system
 
 ## Documentation
+
+### Backend
+
 - if on a linux environment, remember to add `sudo` to every docker command.
 - to build docker image: `sudo docker-compose build {name}`
 - to boot up the database container: `sudo docker-compose up -d db`
@@ -11,3 +15,8 @@ Staff management system
 - to check docker containers: `sudo docker ps -a`
 - to debug by checking docker logs: `sudo docker-compose logs {image name}`
 - to use maven: `mvn clean package`
+
+### Frontend
+
+- to have the latest version of node: `npm install node --latest-npm`
+- to develop in local environment: `npm run dev`

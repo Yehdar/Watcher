@@ -15,19 +15,19 @@ interface UserInterfaceProps {
 const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/";
   const [users, setUsers] = useState<User[]>([]);
-  const [newUsers, setNewUsers] = useState({ name: "", email: "" });
-  const [updateUsers, setUpdateUsers] = useState({
+  const [newUser, setNewUser] = useState({ name: "", email: "" });
+  const [updateUser, setUpdateUser] = useState({
     id: "",
     name: "",
     email: "",
   });
 
   const backgroundColors: { [key: string]: string } = {
-    flask: "bg-blue-500",
+    springboot: "bg-blue-500",
   };
 
   const buttonColors: { [key: string]: string } = {
-    flask: "bg-blue-700 hover:bg-blue-600",
+    springboot: "bg-blue-700 hover:bg-blue-600",
   };
 
   const bgColor =
@@ -52,10 +52,22 @@ const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
   }, [backendName, apiURL]);
 
   return (
-    <div className="card">
-      <h1>{backendName}</h1>
-      <CardComponent card={{ id: 1, name: "Peter Parker", email: "mail" }} />
+    <div
+      className={`user-interface ${bgColor} ${backendName} w-full max-w-md p-4 my-4 rounded shadow`}
+    >
+      <img
+        src={`/${backendName}logo.svg`}
+        alt={`${backendName} Logo`}
+        className="w-20 h-20 mb-6 mx-auto"
+      />
+      <h2 className="text-xl front-bold text-center text-black mb-6">{`${
+        backendName.charAt(0).toUpperCase() + backendName.slice(1)
+      } Backend`}</h2>
     </div>
+    // <div className="card">
+    //   <h1>{backendName}</h1>
+    //   <CardComponent card={{ id: 1, name: "John Doe", email: "mail" }} />
+    // </div>
   );
 };
 

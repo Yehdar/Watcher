@@ -4,7 +4,7 @@ import UserInterface from "@/components/UserInterface";
 const Home: React.FC = () => {
   return (
     <div>
-      <UserInterface backendName="Backend" />
+      <UserInterface backendName="springboot" />
     </div>
   );
 };

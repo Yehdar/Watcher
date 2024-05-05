@@ -63,6 +63,17 @@ const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
       <h2 className="text-xl front-bold text-center text-black mb-6">{`${
         backendName.charAt(0).toUpperCase() + backendName.slice(1)
       } Backend`}</h2>
+      {/* display em */}
+      <div className="space-y-4">
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="flex items-center justify-between bg-whtie p-4 rounded-lg shadow"
+          >
+            <CardComponent card={user} />
+          </div>
+        ))}
+      </div>
     </div>
     // <div className="card">
     //   <h1>{backendName}</h1>

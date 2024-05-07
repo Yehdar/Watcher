@@ -5,7 +5,7 @@ import CardComponent from "./CardComponent";
 interface User {
   id: number;
   name: string;
-  email: string;
+  clockin: string;
 }
 
 interface UserInterfaceProps {
@@ -13,30 +13,14 @@ interface UserInterfaceProps {
 }
 
 const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/";
   const [users, setUsers] = useState<User[]>([]);
-  const [newUser, setNewUser] = useState({ name: "", email: "" });
+  const [newUser, setNewUser] = useState({ name: "", clockin: "" });
   const [updateUser, setUpdateUser] = useState({
     id: "",
     name: "",
-    email: "",
+    clockin: "",
   });
-
-  const backgroundColors: { [key: string]: string } = {
-    springboot: "bg-blue-500",
-  };
-
-  const buttonColors: { [key: string]: string } = {
-    springboot: "bg-blue-700 hover:bg-blue-600",
-  };
-
-  const bgColor =
-    backgroundColors[backendName as keyof typeof backgroundColors] ||
-    "bg-gray-200";
-
-  const btnColor =
-    backgroundColors[backendName as keyof typeof backgroundColors] ||
-    "bg-gray-500 hover:bg-gray-600";
 
   // fetch users
   useEffect(() => {
@@ -60,7 +44,7 @@ const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
         newUser
       );
       setUsers([response.data, ...users]);
-      setNewUser({ name: "", email: "" });
+      setNewUser({ name: "", clockin: "" });
     } catch (error) {
       console.error("erro making user: ", error);
     }
@@ -72,13 +56,17 @@ const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
     try {
       await axios.put(`${apiURL}/api/${backendName}/users/${updateUser.id}`, {
         name: updateUser.name,
-        email: updateUser.email,
+        clockin: updateUser.clockin,
       });
-      setUpdateUser({ id: "", name: "", email: "" });
+      setUpdateUser({ id: "", name: "", clockin: "" });
       setUsers(
         users.map((user) => {
           if (user.id === parseInt(updateUser.id)) {
-            return { ...user, name: updateUser.name, email: updateUser.email };
+            return {
+              ...user,
+              name: updateUser.name,
+              clockin: updateUser.clockin,
+            };
           }
           return user;
         })
@@ -100,88 +88,76 @@ const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
 
   return (
     <div
-      className={`user-interface ${bgColor} ${backendName} w-full max-w-md p-4 my-4 rounded shadow`}
+      className="min-h-screen  p-8 rounded-lg shadow-lg bg-gradient-to-br from-navy-600 to-navy-800 text-white"
+      style={{
+        backgroundImage:
+          "linear-gradient(to bottom right, #FF8C00, #FFA500, #FFD700)",
+      }}
     >
-      <img
-        src={`/${backendName}logo.svg`}
-        alt={`${backendName} Logo`}
-        className="w-20 h-20 mb-6 mx-auto"
-      />
-      <h2 className="text-xl front-bold text-center text-black mb-6">{`${
-        backendName.charAt(0).toUpperCase() + backendName.slice(1)
-      } Backend`}</h2>
+      <h1 className="text-3xl font-bold mb-6"> Staff Management System </h1>
 
       {/* create em */}
-      <form
-        onSubmit={createUser}
-        className="mb-6 p-4 bg-blue-100 rounded shadow"
-      >
+      <form onSubmit={createUser} className="mb-6">
         <input
-          placeholder="Name"
+          placeholder="Employee Name"
           value={newUser.name}
           onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-          className="mb-2 w-full p-2 border-gray-300 rounded"
+          className="mb-2 p-2 rounded w-full text-black"
         />
         <input
-          placeholder="Email"
-          value={newUser.email}
-          onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-          className="mb-2 w-full p-2 border-gray-300 rounded"
+          placeholder="Clock-In Time"
+          value={newUser.clockin}
+          onChange={(e) => setNewUser({ ...newUser, clockin: e.target.value })}
+          className="mb-2 p-2 rounded w-full text-black"
         />
         <button
           type="submit"
-          className="w-full p-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-full"
         >
           Add User
         </button>
       </form>
 
       {/* update em */}
-      <form
-        onSubmit={handleUpdateUser}
-        className="mb-6 p-4 bg-blue-100 rounded shadow"
-      >
+      <form onSubmit={handleUpdateUser} className="mb-6">
         <input
-          placeholder="User Id"
+          placeholder="Ticket ID"
           value={updateUser.id}
           onChange={(e) => setUpdateUser({ ...updateUser, id: e.target.value })}
-          className="mb-2 w-full p-2 border-gray-300 rounded"
+          className="mb-2 p-2 rounded w-full text-black"
         />
         <input
-          placeholder="Name"
+          placeholder="Employee Name"
           value={updateUser.name}
           onChange={(e) =>
             setUpdateUser({ ...updateUser, name: e.target.value })
           }
-          className="mb-2 w-full p-2 border-gray-300 rounded"
+          className="mb-2 p-2 rounded w-full text-black"
         />
         <input
-          placeholder="Email"
-          value={updateUser.email}
+          placeholder="Clock-Out Time"
+          value={updateUser.clockin}
           onChange={(e) =>
-            setUpdateUser({ ...updateUser, email: e.target.value })
+            setUpdateUser({ ...updateUser, clockin: e.target.value })
           }
-          className="mb-2 w-full p-2 border-gray-300 rounded"
+          className="mb-2 p-2 rounded w-full text-black"
         />
         <button
           type="submit"
-          className="w-full p-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-full"
         >
-          Add User
+          Update User
         </button>
       </form>
 
       {/* display em */}
       <div className="space-y-4">
         {users.map((user) => (
-          <div
-            key={user.id}
-            className="flex items-center justify-between bg-whtie p-4 rounded-lg shadow"
-          >
+          <div key={user.id} className="bg-white rounded-lg p-4 shadow">
             <CardComponent card={user} />
             <button
               onClick={() => deleteUser(user.id)}
-              className={`${btnColor} text-white py-2 px-4 rounded`}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-2"
             >
               Delete User
             </button>
@@ -191,7 +167,7 @@ const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
     </div>
     // <div className="card">
     //   <h1>{backendName}</h1>
-    //   <CardComponent card={{ id: 1, name: "John Doe", email: "mail" }} />
+    //   <CardComponent card={{ id: 1, name: "John Doe", clockin: "mail" }} />
     // </div>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 interface Card {
   id: number;
   name: string;
-  email: string;
+  clockin: string;
 }
 
 const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
@@ -11,7 +11,7 @@ const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
     <div className="bg-white shadow-lg round-lg p-2 mb-2 hover:big-gray-100">
       <div className="text=sm text-gray-600">{card.id}</div>
       <div className="text=lg font-semibold text-gray-800">{card.name}</div>
-      <div className="text-md text-gray-700">{card.email}</div>
+      <div className="text-md text-gray-700">{card.clockin}</div>
     </div>
   );
 };

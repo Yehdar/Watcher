@@ -4,6 +4,12 @@
 
 Staff management system
 
+<p align="center"><img src="https://github.com/Yehdar/watcher/blob/main/demo/demo.png" width="80%"></p>
+
+### Technologies Used
+
+Java, Spring Boot, TypeScript, React, Axios, TailwindCSS, PostgreSQL, Hibernate, Apache Maven, Docker Compose, Postman, Chrome DevTools
+
 ## Documentation
 
 ### Backend
